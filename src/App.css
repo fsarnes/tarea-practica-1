@@ -2,41 +2,51 @@
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
-  text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+body {
+  background-image: url('./assets/bg-pattern.jpg');
+  background-size: 200px;
+  background-repeat: repeat;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.container {
+  border-radius: 1rem;
+  padding: 1.5rem;
+  background: moccasin;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.container img:first-child {
+  display: block;
+  margin: auto;
+  margin-bottom: 1rem;
 }
 
-.card {
-  padding: 2em;
+.container__card {
+  border-radius: .5rem !important;
+  position: relative;
+  padding: 0;
 }
 
-.read-the-docs {
-  color: #888;
+.container__card * span {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.container__card * span:nth-child(2) {
+  font-size: 1.3rem;
+  font-weight: 400;
+}
+
+.card__content {
+  padding: 1rem .7rem !important;
+}
+
+.dog-header {
+  margin-top: 0;
+}
+
+.dog-distance {
+  margin-top: .1rem;
+  color: dimgray;
 }
