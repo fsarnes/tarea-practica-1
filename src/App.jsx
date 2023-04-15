@@ -13,6 +13,9 @@ function App() {
   const [dog, setDog] = useState({});
   const [dogOk, setDogOk] = useState(false);
 
+  const [listaRechazados, setListaRechazados] = useState([]);
+  const [listaAceptados, setListaAceptados] = useState([]);
+
   const descripciones = [
     'Soy un perro que siempre está emocionado por conocer a nuevas personas y le encanta jugar.',
     'Soy un can que se lleva bien con todos los que conoce, sin importar su edad o especie.',
@@ -61,6 +64,16 @@ function App() {
     if (dog.url != undefined) setDogOk(true);
   }, [dog]);
 
+  const agregarALista = (accepted) => {
+    setDogOk(false);
+    if (accepted) {
+      setListaAceptados(listaAceptados => [...listaAceptados, dog]);
+    } else {
+      setListaRechazados(listaRechazados => [...listaRechazados, dog]);
+    }
+    getDog();
+  };
+
   return (
     <Box>
       <Grid container spacing={4}>
@@ -74,22 +87,18 @@ function App() {
               alignItems='stretch'
               spacing={2}
             >
-              <CardItem
-                id='1-negrito'
-                name='Negrito'
-                old='2'
-                distance='5'
-                description='Soy un can que se lleva bien con todos los que conoce, sin importar su edad o especie.'
-                aceptado={false}
-                url='https://images.dog.ceo/breeds/schipperke/n02104365_8548.jpg'/>
-              <CardItem
-                id='2-shep'
-                name='Shep'
-                old='5'
-                distance='27'
-                description='Perro amistoso que tiene un gran corazón y siempre está dispuesto a hacer amigos.'
-                aceptado={false}
-                url='https://images.dog.ceo/breeds/australian-shepherd/leroy.jpg'/>
+              {
+                listaRechazados.map((item, index) => (
+                  <CardItem key={index}
+                    id={item.id}
+                    name={item.name}
+                    old={item.old}
+                    distance={item.distance}
+                    description={item.description}
+                    accepted={false}
+                    url={item.url}/>
+                ))
+              }
             </Stack>
 
           </Box>
@@ -103,7 +112,8 @@ function App() {
               old={dog.old}
               distance={dog.distance}
               description={dog.description}
-              aceptado={null}
+              accepted={null}
+              add={agregarALista}
               url={dog.url}/>
             :
             <Card className='container__card' sx={{ boxShadow: 3, border: 12, borderColor: "white" }}>
@@ -125,6 +135,12 @@ function App() {
               </Stack>
             </Card>
           }
+          <div style={{ textAlign: 'center' }}>
+            <br/>
+            <Button target='_blank' href="https://github.com/fsarnes/tarea-practica-1" variant="outlined" startIcon={<GitHubIcon />} sx={{ fontWeight: '700' }}>
+              Repositorio de GitHub
+            </Button>
+          </div>
         </Grid>
         <Grid item xs={4}>
           <Box className='container' sx={{ boxShadow: 3 }}>
@@ -136,32 +152,23 @@ function App() {
               alignItems='stretch'
               spacing={2}
             >
-              <CardItem
-                id='3-manchas'
-                name='Manchas'
-                old='4'
-                distance='12'
-                description='Soy un perro que nunca es agresivo y siempre es amable con las personas y otros animales.'
-                aceptado={true}
-                url='https://images.dog.ceo/breeds/pointer-german/n02100236_4428.jpg'/>
-              <CardItem
-                id='4-guri'
-                name='Guri'
-                old='9'
-                distance='18'
-                description='Soy un perro que siempre está emocionado por conocer a nuevas personas y le encanta jugar.'
-                aceptado={true}
-                url='https://images.dog.ceo/breeds/cockapoo/Guri6.jpg'/>
+              {
+                listaAceptados.map((item, index) => (
+                  <CardItem key={index}
+                    id={item.id}
+                    name={item.name}
+                    old={item.old}
+                    distance={item.distance}
+                    description={item.description}
+                    accepted={true}
+                    url={item.url}/>
+                ))
+              }
             </Stack>
 
           </Box>
         </Grid>
       </Grid>
-      <div style={{ textAlign: 'center' }}>
-        <Button target='_blank' href="https://github.com/fsarnes/tarea-practica-1" variant="outlined" startIcon={<GitHubIcon />} sx={{ fontWeight: '700' }}>
-          Repositorio de GitHub
-        </Button>
-      </div>
     </Box>
   )
 }

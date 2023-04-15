@@ -11,8 +11,8 @@ const CardItem = (props) => {
 
   useEffect(() => {
     setImgHeight(ref.current.clientHeight);
-    if (props.aceptado != null)
-      props.aceptado ? setIcon(<CheckIcon style={{ color: '#FFF' }} />) : setIcon(<ClearIcon style={{ color: '#FFF' }} />);
+    if (props.accepted != null)
+      props.accepted ? setIcon(<CheckIcon style={{ color: '#FFF' }} />) : setIcon(<ClearIcon style={{ color: '#FFF' }} />);
     else
     document.getElementById(`btn${props.id}`).style.display = 'none';
   }, []);
@@ -31,12 +31,12 @@ const CardItem = (props) => {
 
   const changeIcon = (mouse) => {
     if (mouse === 'over') {
-      props.aceptado ? setIcon(<ClearIcon style={{ color: '#FFF' }} />) : setIcon(<CheckIcon style={{ color: '#FFF' }} />);
-      document.getElementById(`btn${props.id}`).style.background = props.aceptado ? '#ED2939' : '#17B169';
+      props.accepted ? setIcon(<ClearIcon style={{ color: '#FFF' }} />) : setIcon(<CheckIcon style={{ color: '#FFF' }} />);
+      document.getElementById(`btn${props.id}`).style.background = props.accepted ? '#ED2939' : '#17B169';
     }
     if (mouse === 'leave') {
-      props.aceptado ? setIcon(<CheckIcon style={{ color: '#FFF' }} />) : setIcon(<ClearIcon style={{ color: '#FFF' }} />);
-      document.getElementById(`btn${props.id}`).style.background = props.aceptado ? '#17B169' : '#ED2939';
+      props.accepted ? setIcon(<CheckIcon style={{ color: '#FFF' }} />) : setIcon(<ClearIcon style={{ color: '#FFF' }} />);
+      document.getElementById(`btn${props.id}`).style.background = props.accepted ? '#17B169' : '#ED2939';
     }
   };
 
@@ -45,10 +45,10 @@ const CardItem = (props) => {
       className='container__card'
       sx={{ boxShadow: 3, border: 12, borderColor: "white" }}
     >
-      <Tooltip title={props.aceptado ? 'Rechazar' : 'Aceptar'} placement='right'>
+      <Tooltip title={props.accepted ? 'Rechazar' : 'Aceptar'} placement='right'>
         <IconButton id={`btn${props.id}`}
-          style={{ position: 'absolute', top: imgHeight - 24, right: '1rem', background: props.aceptado ? '#17B169' : '#ED2939', transition: 'background .2s linear' }}
-          onClick={() => console.log(props.aceptado)}
+          style={{ position: 'absolute', top: imgHeight - 24, right: '1rem', background: props.accepted ? '#17B169' : '#ED2939', transition: 'background .2s linear' }}
+          onClick={() => console.log(props.accepted)}
           onMouseOver={() => changeIcon('over')}
           onMouseLeave={() => changeIcon('leave')}
           size='large'
@@ -73,12 +73,12 @@ const CardItem = (props) => {
         <Divider />
         <p>{props.description}</p>
         {
-          props.aceptado == null ?
+          props.accepted == null ?
           <Stack direction="row" spacing={1}>
-            <Button fullWidth={true} color='error' variant="contained" startIcon={<ClearIcon />}>
+            <Button onClick={() => props.add(false)} fullWidth={true} color='error' variant="contained" startIcon={<ClearIcon />}>
               Rechazar
             </Button>
-            <Button fullWidth={true} color='success' variant="contained" startIcon={<CheckIcon />}>
+            <Button onClick={() => props.add(true)} fullWidth={true} color='success' variant="contained" startIcon={<CheckIcon />}>
               Aceptar
             </Button>
           </Stack>
