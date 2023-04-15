@@ -48,7 +48,7 @@ const CardItem = (props) => {
       <Tooltip title={props.accepted ? 'Rechazar' : 'Aceptar'} placement='right'>
         <IconButton id={`btn${props.id}`}
           style={{ position: 'absolute', top: imgHeight - 24, right: '1rem', background: props.accepted ? '#17B169' : '#ED2939', transition: 'background .2s linear' }}
-          onClick={() => console.log(props.accepted)}
+          onClick={() => props.changeStatus(props)}
           onMouseOver={() => changeIcon('over')}
           onMouseLeave={() => changeIcon('leave')}
           size='large'

@@ -4,7 +4,7 @@ import ImgRechazados from './assets/rechazados.svg';
 import ImgAceptados from './assets/aceptados.svg';
 import CardItem from './components/CardItem';
 import GitHubIcon from '@mui/icons-material/GitHub';
-import { List, ListItem, Box, Grid, Stack, Card, Button, Skeleton } from '@mui/material';
+import { Box, Grid, Stack, Card, Button, Skeleton } from '@mui/material';
 import axios from 'axios';
 import dogNames from 'dog-names';
 
@@ -74,6 +74,26 @@ function App() {
     getDog();
   };
 
+  const changeStatus = (props) => {
+    let dogProps = {
+      id: props.id,
+      name: props.name,
+      old: props.old,
+      distance: props.distance,
+      description: props.description,
+      accepted: props.accepted,
+      url: props.url
+    };
+
+    if (!props.accepted) {
+      setListaAceptados(listaAceptados => [...listaAceptados, dogProps]);
+      listaRechazados.splice(listaRechazados.findIndex(x => x.id == dogProps.id), 1);
+    } else {
+      setListaRechazados(listaRechazados => [...listaRechazados, dogProps]);
+      listaAceptados.splice(listaAceptados.findIndex(x => x.id == dogProps.id), 1);
+    }
+  };
+
   return (
     <Box>
       <Grid container spacing={4}>
@@ -96,6 +116,7 @@ function App() {
                     distance={item.distance}
                     description={item.description}
                     accepted={false}
+                    changeStatus={changeStatus}
                     url={item.url}/>
                 ))
               }
@@ -161,6 +182,7 @@ function App() {
                     distance={item.distance}
                     description={item.description}
                     accepted={true}
+                    changeStatus={changeStatus}
                     url={item.url}/>
                 ))
               }
