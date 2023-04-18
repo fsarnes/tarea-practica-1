@@ -100,7 +100,7 @@ function App() {
   return (
     <Box>
       <Grid container spacing={4}>
-        <Grid item xs={4}>
+        <Grid item xs={12} sm={4} lg={3.5} order={{ xs: 2, sm: 1, lg: 1 }}>
           <Box className='container' sx={{ boxShadow: 3 }}>
             <img src={ImgRejected} width='75%' title='' alt='Rechazados' />
 
@@ -127,7 +127,7 @@ function App() {
 
           </Box>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12} sm={4} lg={5} order={{ xs: 1, sm: 2, lg: 2 }}>
           {
             dogOk ?
               <CardItem
@@ -141,21 +141,27 @@ function App() {
               url={dog.url}/>
             :
             <Card className='container__card' sx={{ boxShadow: 3, border: 12, borderColor: 'white' }}>
-              <Stack spacing={3}>
-                <Skeleton variant='rectangular' sx={{ aspectRatio: '1', height: '100%' }} />
-                <Stack spacing={1}>
-                  <Skeleton variant='rectangular' width='40%' height='1.5rem'/>
-                  <Skeleton variant='rectangular' width='60%' height='1rem'/>
-                </Stack>
-                <Stack spacing={1}>
-                  <Skeleton variant='rectangular' width='90%' height='1rem'/>
-                  <Skeleton variant='rectangular' width='90%' height='1rem'/>
-                  <Skeleton variant='rectangular' width='30%' height='1rem'/>
-                </Stack>
-                <Stack direction='row' spacing={1}>
-                  <Skeleton variant='rectangular' width='50%' height='2rem'/>
-                  <Skeleton variant='rectangular' width='50%' height='2rem'/>
-                </Stack>
+              <Stack>
+                <Skeleton variant='rectangular' sx={{ aspectRatio: '1', height: '100%', marginBottom: '.5rem' }} />
+                <Box className='card__content'>
+                  <Stack spacing={2.5}>
+                    <Stack spacing={4.7}>
+                      <Stack spacing={1.5}>
+                        <Skeleton variant='rectangular' width='40%' height='1.5rem'/>
+                        <Skeleton variant='rectangular' width='60%' height='1.2rem'/>
+                      </Stack>
+                      <Stack spacing={1}>
+                        <Skeleton variant='rectangular' width='90%' height='1rem'/>
+                        <Skeleton variant='rectangular' width='90%' height='1rem'/>
+                        <Skeleton variant='rectangular' width='30%' height='1rem'/>
+                      </Stack>
+                    </Stack>
+                    <Stack direction={{ xs: 'column', lg: 'row' }} spacing={{ xs: 1.5, lg: 2 }}>
+                      <Skeleton variant='rectangular' width='100%' height='2.2rem'/>
+                      <Skeleton variant='rectangular' width='100%' height='2.2rem'/>
+                    </Stack>
+                  </Stack>
+                </Box>
               </Stack>
             </Card>
           }
@@ -174,7 +180,7 @@ function App() {
             </Button>
           </Box>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12} sm={4} lg={3.5} order={{ xs: 3, sm: 3, lg: 3 }}>
           <Box className='container' sx={{ boxShadow: 3 }}>
             <img src={ImgAccepted} width='75%' title='' alt='Aceptados' />
 

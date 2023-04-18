@@ -79,7 +79,7 @@ const CardItem = (dog) => {
         <p>{dog.description}</p>
         {
           dog.accepted == null &&
-          <Stack direction='row' spacing={1}>
+          <Stack direction={{ xs: 'column', lg: 'row' }} spacing={{ xs: 1.5, lg: 2 }}>
             <Button onClick={() => dog.add(false)} fullWidth={true} color='error' variant='contained' startIcon={<ClearIcon />}>
               Rechazar
             </Button>
