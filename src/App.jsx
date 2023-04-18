@@ -12,40 +12,54 @@ function App() {
   const [dogCount, setDogCount] = useState(0);
   const [dog, setDog] = useState({});
   const [dogOk, setDogOk] = useState(false);
+  const [variant, setVariant] = useState('outlined');
 
   const [rejectedList, setRejectedList] = useState([]);
   const [acceptedList, setAcceptedList] = useState([]);
 
   const descriptions = [
-    'Soy un perro que siempre está emocionado por conocer a nuevas personas y le encanta jugar.',
-    'Soy un can que se lleva bien con todos los que conoce, sin importar su edad o especie.',
-    'Soy un perro amistoso que siempre quiere estar cerca de sus seres queridos y recibe con entusiasmo a cualquier visita.',
-    'Canino que tiene un temperamento gentil y tranquilo, y nunca mostraría agresividad.',
-    'Soy un perro leal y cariñoso que siempre está feliz de hacer nuevos amigos.',
-    'Soy un can que se siente atraído por los extraños y hace todo lo posible para ganarse su afecto.',
-    'Un perro amigable que siempre está dispuesto a compartir su espacio y juguetes con otros.',
-    'Un perro al que le encanta dar abrazos y besos a todos los que conoce.',
-    'Un canino que es muy sociable y disfruta pasar tiempo con otros perros en el parque.',
-    'Soy un perro que siempre está emocionado de ver a su dueño, incluso si solo se han separado por unos minutos.',
-    'Perro amistoso que tiene un gran corazón y siempre está dispuesto a hacer amigos.',
-    'Soy un can que siempre está feliz de dar un paseo y conocer a nuevas personas.',
-    'Soy un perro que nunca es agresivo y siempre es amable con las personas y otros animales.',
-    'Perro amigable que siempre está dispuesto a prestar atención y escuchar lo que tienes que decir.',
-    'Soy un canino que es un excelente compañero y siempre está dispuesto a pasar tiempo contigo.',
-    'Soy un perro que es muy acogedor y siempre hace que los invitados se sientan como en casa.'
+    'Siempre estoy emocionado de conocer a nuevas personas y hacer amigos.',
+    'Soy un perro muy sociable que se lleva bien con otros perros y humanos.',
+    'Me encanta jugar y hacer ejercicio con mis amigos humanos y caninos.',
+    'Soy un perro que siempre está emocionado por conocer nuevos amigos y me encanta jugar con el agua.',
+    'Soy un perro muy leal que siempre está al lado de mis seres queridos.',
+    'Siempre estoy dispuesto a hacer nuevos amigos para jugar juntos.',
+    'Soy muy amigable con los niños y siempre estoy feliz de jugar con ellos.',
+    'Soy un perro muy tranquilo y gentil que nunca mostraría agresividad.',
+    'Me encanta acurrucarme y pasar tiempo con mis dueños.',
+    'Siempre estoy feliz de dar paseos y explorar el mundo con mi familia.',
+    'Soy un perro muy juguetón y siempre estoy dispuesto a compartir mis juguetes.',
+    'Siempre estoy dispuesto a hacer nuevos amigos caninos y humanos.',
+    'Soy un perro muy amable y me encanta ayudar a mis dueños.',
+    'Siempre estoy emocionado de ver a mis seres queridos, incluso si sólo han estado fuera por unos minutos.',
+    'Me encanta dar abrazos y besos a mis seres queridos para mostrarles cuánto los quiero.',
+    'Soy muy respetuoso con otros animales y siempre me llevo bien con ellos.',
+    'Siempre estoy feliz de pasar tiempo al aire libre con mis amigos humanos.',
+    'Soy un perro muy enérgico y siempre estoy dispuesto a jugar y correr con mis amigos.',
+    'Soy muy protector con mis seres queridos y siempre estoy dispuesto a cuidar de ellos.',
+    'Me encanta hacer trucos y mostrarles a todos lo inteligente que soy.',
+    'Siempre estoy feliz de hacer nuevos amigos y tengo un gran corazón para todos.',
+    'Soy muy amigable con los extraños y siempre estoy dispuesto a darles la bienvenida.',
+    'Soy un perro muy feliz que siempre está saltando de alegría.',
+    'Siempre estoy dispuesto a compartir mi comida y agua con otros perros.',
+    'Soy un perro muy amistoso que siempre está dispuesto a jugar y hacer amigos.',
+    'Siempre estoy enfocado en hacer ejercicio y mantenerme en forma.',
+    'Soy muy paciente y siempre estoy dispuesto a esperar a mis seres queridos cuando están ocupados.',
+    'Me encanta dormir y acompañar a mi familia humana.',
+    'Soy un perro muy amable y siempre estoy feliz de recibir caricias y mimos.',
+    'Siempre estoy emocionado de salir y explorar nuevos lugares con mi familia.'
   ];
 
-  const getRandomDescription = () => {
-     return descriptions[Math.floor(Math.random() * descriptions.length)];
-  };
+  const getRandomDescription = () => descriptions[Math.floor(Math.random() * descriptions.length)];
 
   const getDog = () => {
     axios
       .get('https://dog.ceo/api/breeds/image/random')
       .then((response) => {
         let dogName = dogNames.allRandom();
+        setDogCount(dogCount + 1);
         setDog({
-          id: `${dogCount + 1}-${dogName}`,
+          id: `${dogCount}-${dogName}`,
           name: dogName,
           age: Math.floor(Math.random() * 17 + 1),
           distance: Math.floor(Math.random() * 30 + 1),
@@ -53,7 +67,6 @@ function App() {
           url: response.data.message
         });
       });
-    setDogCount(dogCount + 1);
   };
 
   useEffect(() => {
@@ -75,22 +88,12 @@ function App() {
   };
 
   const changeStatus = (dog) => {
-    let dogProps = {
-      id: dog.id,
-      name: dog.name,
-      age: dog.age,
-      distance: dog.distance,
-      description: dog.description,
-      accepted: dog.accepted,
-      url: dog.url
-    };
-
-    if (!dog.accepted) {
-      setAcceptedList(acceptedList => [...acceptedList, dogProps]);
-      rejectedList.splice(rejectedList.findIndex(x => x.id == dogProps.id), 1);
+    if (dog.accepted) {
+      setRejectedList(rejectedList => [...rejectedList, dog]);
+      acceptedList.splice(acceptedList.findIndex(x => x.id == dog.id), 1);
     } else {
-      setRejectedList(rejectedList => [...rejectedList, dogProps]);
-      acceptedList.splice(acceptedList.findIndex(x => x.id == dogProps.id), 1);
+      setAcceptedList(acceptedList => [...acceptedList, dog]);
+      rejectedList.splice(rejectedList.findIndex(x => x.id == dog.id), 1);
     }
   };
 
@@ -139,7 +142,7 @@ function App() {
             :
             <Card className='container__card' sx={{ boxShadow: 3, border: 12, borderColor: 'white' }}>
               <Stack spacing={3}>
-                <Skeleton variant='rectangular' style={{ aspectRatio: '1', height: '100%' }} />
+                <Skeleton variant='rectangular' sx={{ aspectRatio: '1', height: '100%' }} />
                 <Stack spacing={1}>
                   <Skeleton variant='rectangular' width='40%' height='1.5rem'/>
                   <Skeleton variant='rectangular' width='60%' height='1rem'/>
@@ -156,12 +159,20 @@ function App() {
               </Stack>
             </Card>
           }
-          <div style={{ textAlign: 'center' }}>
+          <Box sx={{ textAlign: 'center' }}>
             <br/>
-            <Button target='_blank' href='https://github.com/fsarnes/tarea-practica-1' variant='outlined' startIcon={<GitHubIcon />} sx={{ fontWeight: '700' }}>
+            <Button
+              target='_blank'
+              href='https://github.com/fsarnes/tarea-practica-1'
+              variant={variant}
+              startIcon={<GitHubIcon />}
+              onMouseOver={() => setVariant('contained')}
+              onMouseLeave={() => setVariant('outlined')}
+              sx={{ fontWeight: '500' }}
+            >
               Repositorio de GitHub
             </Button>
-          </div>
+          </Box>
         </Grid>
         <Grid item xs={4}>
           <Box className='container' sx={{ boxShadow: 3 }}>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react';
 import { Card, CardMedia, CardContent, IconButton, Tooltip, Divider, Stack, Button } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -6,37 +6,42 @@ import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
 
 const CardItem = (dog) => {
   const [imgHeight, setImgHeight] = useState(0);
-  const [icon, setIcon] = useState(null)
+  const [icon, setIcon] = useState(null);
   const ref = useRef(null);
+  const states =
+  {
+    'accepted': {
+      'icon': <CheckIcon sx={{ color: '#FFF' }} />,
+      'color': '#17B169'
+    },
+    'rejected': {
+      'icon': <ClearIcon sx={{ color: '#FFF' }} />,
+      'color': '#ED2939'
+    }
+  };
 
   useEffect(() => {
     setImgHeight(ref.current.clientHeight);
     if (dog.accepted != null)
-      dog.accepted ? setIcon(<CheckIcon style={{ color: '#FFF' }} />) : setIcon(<ClearIcon style={{ color: '#FFF' }} />);
+      setIcon(dog.accepted ? states.accepted.icon : states.rejected.icon);
     else
-    document.getElementById(`btn${dog.id}`).style.display = 'none';
+      document.getElementById(`btn${dog.id}`).style.display = 'none';
   }, []);
 
   useEffect(() => {
-    const handleWindowResize = () => {
-      setImgHeight(ref.current.clientHeight)
-    };
-
+    const handleWindowResize = () => setImgHeight(ref.current.clientHeight);
     window.addEventListener('resize', handleWindowResize);
-
-    return () => {
-      window.removeEventListener('resize', handleWindowResize);
-    };
+    return () => window.removeEventListener('resize', handleWindowResize);
   });
 
   const changeIcon = (mouse) => {
     if (mouse === 'over') {
-      dog.accepted ? setIcon(<ClearIcon style={{ color: '#FFF' }} />) : setIcon(<CheckIcon style={{ color: '#FFF' }} />);
-      document.getElementById(`btn${dog.id}`).style.background = dog.accepted ? '#ED2939' : '#17B169';
+      setIcon(dog.accepted ? states.rejected.icon : states.accepted.icon);
+      document.getElementById(`btn${dog.id}`).style.background = dog.accepted ? states.rejected.color : states.accepted.color;
     }
     if (mouse === 'leave') {
-      dog.accepted ? setIcon(<CheckIcon style={{ color: '#FFF' }} />) : setIcon(<ClearIcon style={{ color: '#FFF' }} />);
-      document.getElementById(`btn${dog.id}`).style.background = dog.accepted ? '#17B169' : '#ED2939';
+      setIcon(dog.accepted ? states.accepted.icon : states.rejected.icon);
+      document.getElementById(`btn${dog.id}`).style.background = dog.accepted ? states.accepted.color : states.rejected.color;
     }
   };
 
@@ -47,12 +52,12 @@ const CardItem = (dog) => {
     >
       <Tooltip title={dog.accepted ? 'Rechazar' : 'Aceptar'} placement='right'>
         <IconButton id={`btn${dog.id}`}
-          style={{ position: 'absolute', top: imgHeight - 24, right: '1rem', background: dog.accepted ? '#17B169' : '#ED2939', transition: 'background .2s linear' }}
+          sx={{ position: 'absolute', top: imgHeight - 24, right: '1rem', background: dog.accepted ? states.accepted.color : states.rejected.color, transition: 'background .2s linear' }}
           onClick={() => dog.changeStatus(dog)}
           onMouseOver={() => changeIcon('over')}
           onMouseLeave={() => changeIcon('leave')}
           size='large'
-          sx={{ boxShadow: 2 }}
+          style={{ boxShadow: 2 }}
         >
           {icon}
         </IconButton>
@@ -60,7 +65,7 @@ const CardItem = (dog) => {
       <CardMedia
         ref={ref}
         component='img'
-        style={{ aspectRatio: '1', borderRadius: '.25rem' }}
+        sx={{ aspectRatio: '1', borderRadius: '.25rem' }}
         title={`${dog.name}, ${dog.age} ${dog.age > 1 ? 'años' : 'año'}`}
         image={dog.url}
       />
@@ -73,7 +78,7 @@ const CardItem = (dog) => {
         <Divider />
         <p>{dog.description}</p>
         {
-          dog.accepted == null ?
+          dog.accepted == null &&
           <Stack direction='row' spacing={1}>
             <Button onClick={() => dog.add(false)} fullWidth={true} color='error' variant='contained' startIcon={<ClearIcon />}>
               Rechazar
@@ -82,8 +87,6 @@ const CardItem = (dog) => {
               Aceptar
             </Button>
           </Stack>
-          :
-          ''
         }
       </CardContent>
     </Card>
