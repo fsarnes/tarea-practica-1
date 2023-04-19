@@ -12,7 +12,6 @@ function App() {
   const [dogCount, setDogCount] = useState(0);
   const [dog, setDog] = useState({});
   const [dogOk, setDogOk] = useState(false);
-  const [variant, setVariant] = useState('outlined');
 
   const [rejectedList, setRejectedList] = useState([]);
   const [acceptedList, setAcceptedList] = useState([]);
@@ -105,13 +104,13 @@ function App() {
             <img src={ImgRejected} width='75%' title='' alt='Rechazados' />
 
             <Stack
-              direction='column-reverse'
+              direction='column'
               justifyContent='flex-end'
               alignItems='stretch'
               spacing={2}
             >
               {
-                rejectedList.map((dog, index) => (
+                rejectedList.slice(0).reverse().map((dog, index) => (
                   <CardItem key={index}
                     id={dog.id}
                     name={dog.name}
@@ -170,10 +169,8 @@ function App() {
             <Button
               target='_blank'
               href='https://github.com/fsarnes/tarea-practica-1'
-              variant={variant}
+              variant='contained'
               startIcon={<GitHubIcon />}
-              onMouseOver={() => setVariant('contained')}
-              onMouseLeave={() => setVariant('outlined')}
               sx={{ fontWeight: '500' }}
             >
               Repositorio de GitHub
@@ -185,13 +182,13 @@ function App() {
             <img src={ImgAccepted} width='75%' title='' alt='Aceptados' />
 
             <Stack
-              direction='column-reverse'
+              direction='column'
               justifyContent='flex-end'
               alignItems='stretch'
               spacing={2}
             >
               {
-                acceptedList.map((dog, index) => (
+                acceptedList.slice(0).reverse().map((dog, index) => (
                   <CardItem key={index}
                     id={dog.id}
                     name={dog.name}

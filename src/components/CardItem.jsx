@@ -35,12 +35,16 @@ const CardItem = (dog) => {
   });
 
   const changeIcon = (mouse) => {
-    if (mouse === 'over') {
-      setIcon(dog.accepted ? states.rejected.icon : states.accepted.icon);
-      document.getElementById(`btn${dog.id}`).style.background = dog.accepted ? states.rejected.color : states.accepted.color;
-    }
-    if (mouse === 'leave') {
-      setIcon(dog.accepted ? states.accepted.icon : states.rejected.icon);
+    if (screen.orientation.type === 'landscape-primary') {
+      if (mouse === 'over') {
+        setIcon(dog.accepted ? states.rejected.icon : states.accepted.icon);
+        document.getElementById(`btn${dog.id}`).style.background = dog.accepted ? states.rejected.color : states.accepted.color;
+      }
+      if (mouse === 'leave') {
+        setIcon(dog.accepted ? states.accepted.icon : states.rejected.icon);
+        document.getElementById(`btn${dog.id}`).style.background = dog.accepted ? states.accepted.color : states.rejected.color;
+      }
+    } else {
       document.getElementById(`btn${dog.id}`).style.background = dog.accepted ? states.accepted.color : states.rejected.color;
     }
   };
