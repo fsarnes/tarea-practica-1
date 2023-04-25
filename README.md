@@ -1,8 +1,25 @@
 # Taller de Desarrollo Avanzado de Aplicaciones Web
+
+**Alumno:** Felipe Sánchez Arnés  
+**Carrera:** Ingeniería Civil en Informática
+
+## Ambiente de desarrollo
+
+| Nombre | Versión | Documentación |
+| ------ | ------- | ------------- |
+| Node.js | 18.15.0 | [Node.js Docs](https://nodejs.org/en/docs) |
+| Material UI | 5.12.0 | [Material UI Docs](https://mui.com/material-ui/getting-started/overview/) |
+| Material Icons | 5.11.16 | [Material Icons Docs](https://mui.com/material-ui/material-icons/) |
+| Axios | 1.3.5 | [Axios Docs](https://axios-http.com/docs/intro) |
+| Dog-names | 2.1.0 | [Dog-names Docs](https://github.com/sindresorhus/dog-names) |
+| React | 18.2.0 | [React Docs](https://react.dev/learn) |
+| React DOM | 18.2.0 | [React DOM Docs](https://react.dev/reference/react-dom) |
+
 ## Tarea Práctica N° 1
 
-**Alumno:** Felipe Sánchez Arnés</br>
-**Carrera:** Ingeniería Civil en Informática
+_Último commit: [19-04-2023](https://github.com/fsarnes/tarea-practica-1/tree/2c5106ed5373d18f6ca1496c3102f5676800c1ff)_
+
+![image](https://user-images.githubusercontent.com/59930505/234180842-2db5b3ea-5a76-4e13-a095-466be81f7a11.png)
 
 ### 💬 Enunciado
 A usted como futuro ingeniero de la Universidad del Bío-Bío se le ha encomendado la siguiente misión:
@@ -23,3 +40,21 @@ Como **funcionalidad minima** se pedirá:
 - Crear un botón para arrepentirse, que permita por cada perro aceptado o rechazado moverlo a la lista contraria y quitarlo de la original.
 
 **Personalizar la parte visual sumará puntos en base a la complejidad del desarrollo (máximo +1 punto).**
+
+## Tarea Práctica N° 2
+
+### 💬 Enunciado
+
+Usted ya presentó la maqueta del Tinder para perros. El cliente, medianamente conforme, solicitó algunas mejoras que deberán implementarse para la próxima reunión que tendrán.
+
+- **Reordenar columnas.** Para una funcionalidad más próxima, el cliente solicita que el orden de las columnas cambie. Esto quedaría así: de izquierda a derecha, primero debería estar el perro candidato; en la columna central, los perros aceptados y, en la columna de la derecha, los perros rechazados.
+- **Implementación de React Query.** El cliente leyó en internet que podría servirle a su Tinder para hacer la carga de información de sus canes. La utilidad que debe aplicar con esta libreria es poder utilizar las funciones "isLoading", "refetch", "isRefetching" y demás para activar o desactivar mensajes de carga, entre otras funciones que le parecieron interesantes.
+- **Implementación de loaders.** El cliente solicita que no se muestre un mensaje de que la información se está cargando, sino que use un loader. Material UI cuenta con 2 tipos de loader: Linear Progress y Circular Progress. Esto se debe mostrar al momento en que la información se esté cargando y ocultarse cuando esté listo.
+- **Incluir una breve descripción del perro candidato.** Esta parte, al igual que el nombramiento del perro, puede ser un texto aleatorio. Se puede utilizar un relleno Lorem Ipsum para cada uno. No necesariamente debe ser un texto con lógica.
+- **Descripcion oculta en las columnas de aceptados o rechazados.** La descripción del perro deberá permanecer oculta hasta que se presione un botón. Al realizar dicha acción, se debe desplegar la información oculta.
+- **Botones y tooltips.** Los botones deberán ser iconButtons, es decir, deberán ser sólo un icono sin texto visible. Para saber de qué trata cada botón, deberá implementar un tooltip que se debe desplegar cuando se pase el puntero sobre el botón.
+- **Adaptabilidad.** Se debe tener un control del movimiento de las columnas en cada caso, contemplando la idea de que se puedan ver en distintos dispositivos con diversas resoluciones. Las columnas siempre serán 3. Cuando la pantalla se achique, la aplicación debe ajustar el tamaño de las columnas hasta el punto en que si la pantalla es muy pequeña, se debe ordenar las columnas de tal forma que el perro candidato se muestre en una fila, y las columnas de "aceptado" y "rechazado" se vean juntas en la fila inferior.
+- **Columnas scrollables.** Las columnas de aceptados o rechazados se deben poder scrollear de forma independiente. Esto para no perder el focus del postulante en caso de que se quiera bajar a ver un perro aceptado o rechazado.
+- **Ordenamiento.** Los perros se deben ordenar de tal forma que el primero en la lista sea el último que se añadió a ella.
+
+**El sistema además deberá cumplir con todos los puntos de la Tarea Práctica N° 1.**
