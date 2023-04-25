@@ -151,7 +151,7 @@ function App() {
             <br/>
             <Button
               target='_blank'
-              href='https://github.com/fsarnes/tarea-practica-1'
+              href='https://github.com/fsarnes/tinder-perros'
               variant='contained'
               startIcon={<GitHubIcon />}
               sx={{ fontWeight: '500' }}
