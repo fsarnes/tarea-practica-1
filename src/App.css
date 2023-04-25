@@ -16,7 +16,13 @@ body {
   background: moccasin;
 }
 
-.container img:first-child {
+.container-mobile {
+  border-radius: 1rem;
+  padding-top: 1.5rem;
+  background: moccasin;
+}
+
+:is(.container, .container-mobile) > img:first-child {
   display: block;
   margin: auto;
   margin-bottom: 1rem;
@@ -39,7 +45,7 @@ body {
 }
 
 .card__content {
-  padding: 1rem .7rem !important;
+  padding: 1rem .7rem 0 .7rem !important;
 }
 
 .dog-header {

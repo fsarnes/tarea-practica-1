@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import './App.css';
 import ImgRejected from './assets/rejected.svg';
 import ImgAccepted from './assets/accepted.svg';
 import CardItem from './components/CardItem';
 import GitHubIcon from '@mui/icons-material/GitHub';
-import { Box, Grid, Stack, Card, Button, Skeleton } from '@mui/material';
+import { Box, Grid, Stack, Card, Button, Skeleton, LinearProgress } from '@mui/material';
 import axios from 'axios';
 import dogNames from 'dog-names';
 
@@ -12,6 +12,8 @@ function App() {
   const [dogCount, setDogCount] = useState(0);
   const [dog, setDog] = useState({});
   const [dogOk, setDogOk] = useState(false);
+  const [vwidth, setVwidth] = useState(0);
+  const ref = useRef(null);
 
   const [rejectedList, setRejectedList] = useState([]);
   const [acceptedList, setAcceptedList] = useState([]);
@@ -69,12 +71,19 @@ function App() {
   };
 
   useEffect(() => {
+    setVwidth(ref.current.clientWidth);
     getDog();
   }, []);
 
   useEffect(() => {
     if (dog.url != undefined) setDogOk(true);
   }, [dog]);
+
+  useEffect(() => {
+    const handleWindowResize = () => setVwidth(ref.current.clientWidth);
+    window.addEventListener('resize', handleWindowResize);
+    return () => window.removeEventListener('resize', handleWindowResize);
+  });
 
   const addToList = (accepted) => {
     setDogOk(false);
@@ -97,36 +106,9 @@ function App() {
   };
 
   return (
-    <Box>
-      <Grid container spacing={4}>
-        <Grid item xs={12} sm={4} lg={3.5} order={{ xs: 2, sm: 1, lg: 1 }}>
-          <Box className='container' sx={{ boxShadow: 3 }}>
-            <img src={ImgRejected} width='75%' title='' alt='Rechazados' />
-
-            <Stack
-              direction='column'
-              justifyContent='flex-end'
-              alignItems='stretch'
-              spacing={2}
-            >
-              {
-                rejectedList.slice(0).reverse().map((dog, index) => (
-                  <CardItem key={index}
-                    id={dog.id}
-                    name={dog.name}
-                    age={dog.age}
-                    distance={dog.distance}
-                    description={dog.description}
-                    accepted={false}
-                    changeStatus={changeStatus}
-                    url={dog.url}/>
-                ))
-              }
-            </Stack>
-
-          </Box>
-        </Grid>
-        <Grid item xs={12} sm={4} lg={5} order={{ xs: 1, sm: 2, lg: 2 }}>
+    <Box >
+      <Grid container spacing={4} ref={ref}>
+        <Grid item xs={12} sm={4} lg={5}>
           {
             dogOk ?
               <CardItem
@@ -140,6 +122,7 @@ function App() {
               url={dog.url}/>
             :
             <Card className='container__card' sx={{ boxShadow: 3, border: 12, borderColor: 'white' }}>
+              <LinearProgress />
               <Stack>
                 <Skeleton variant='rectangular' sx={{ aspectRatio: '1', height: '100%', marginBottom: '.5rem' }} />
                 <Box className='card__content'>
@@ -155,9 +138,9 @@ function App() {
                         <Skeleton variant='rectangular' width='30%' height='1rem'/>
                       </Stack>
                     </Stack>
-                    <Stack direction={{ xs: 'column', lg: 'row' }} spacing={{ xs: 1.5, lg: 2 }}>
-                      <Skeleton variant='rectangular' width='100%' height='2.2rem'/>
-                      <Skeleton variant='rectangular' width='100%' height='2.2rem'/>
+                    <Stack direction='row' spacing={2} justifyContent='center'>
+                      <Skeleton variant='circular' width='48px' height='48px'/>
+                      <Skeleton variant='circular' width='48px' height='48px'/>
                     </Stack>
                   </Stack>
                 </Box>
@@ -177,31 +160,58 @@ function App() {
             </Button>
           </Box>
         </Grid>
-        <Grid item xs={12} sm={4} lg={3.5} order={{ xs: 3, sm: 3, lg: 3 }}>
-          <Box className='container' sx={{ boxShadow: 3 }}>
+        <Grid item xs={6} sm={4} lg={3.5}>
+          <Box className={ vwidth < 600 ? 'container-mobile' : 'container' } sx={{ boxShadow: 3 }}>
             <img src={ImgAccepted} width='75%' title='' alt='Aceptados' />
-
-            <Stack
-              direction='column'
-              justifyContent='flex-end'
-              alignItems='stretch'
-              spacing={2}
-            >
-              {
-                acceptedList.slice(0).reverse().map((dog, index) => (
-                  <CardItem key={index}
+            <Box maxHeight="500px" sx={{ overflow: "hidden", overflowY: "auto", filter: "drop-shadow(0px 3px 3px rgba(0, 0, 0, 0.3))" }}>
+              <Stack
+                direction='column'
+                justifyContent='flex-end'
+                alignItems='stretch'
+                spacing={2}
+              >
+                {
+                  acceptedList.slice(0).reverse().map((dog, index) => (
+                    <CardItem key={index}
+                      id={dog.id}
+                      name={dog.name}
+                      age={dog.age}
+                      distance={dog.distance}
+                      description={dog.description}
+                      accepted={true}
+                      changeStatus={changeStatus}
+                      url={dog.url}/>
+                  ))
+                }
+              </Stack>
+            </Box>
+          </Box>
+        </Grid>
+        <Grid item xs={6} sm={4} lg={3.5}>
+          <Box className={ vwidth < 600 ? 'container-mobile' : 'container' } sx={{ boxShadow: 3 }}>
+            <img src={ImgRejected} width='75%' title='' alt='Rechazados' />
+            <Box maxHeight="500px" sx={{ overflow: "hidden", overflowY: "auto", filter: "drop-shadow(0px 3px 3px rgba(0, 0, 0, 0.3))" }}>
+              <Stack
+                direction='column'
+                justifyContent='flex-end'
+                alignItems='stretch'
+                spacing={2}
+              >
+                {
+                  rejectedList.slice(0).reverse().map((dog, index) => (
+                    <CardItem key={index}
                     id={dog.id}
                     name={dog.name}
                     age={dog.age}
                     distance={dog.distance}
                     description={dog.description}
-                    accepted={true}
+                    accepted={false}
                     changeStatus={changeStatus}
                     url={dog.url}/>
-                ))
-              }
-            </Stack>
-
+                  ))
+                }
+              </Stack>
+            </Box>
           </Box>
         </Grid>
       </Grid>
