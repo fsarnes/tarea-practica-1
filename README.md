@@ -3,7 +3,7 @@
 **Alumno:** Felipe Sánchez Arnés  
 **Carrera:** Ingeniería Civil en Informática
 
-## Ambiente de desarrollo
+## Ambiente de Desarrollo
 
 | Nombre | Versión | Documentación |
 | ------ | ------- | ------------- |
@@ -14,10 +14,12 @@
 | Dog-names | 2.1.0 | [Dog-names Docs](https://github.com/sindresorhus/dog-names) |
 | React | 18.2.0 | [React Docs](https://react.dev/learn) |
 | React DOM | 18.2.0 | [React DOM Docs](https://react.dev/reference/react-dom) |
+| React Query | 3.39.3 | [React Query Docs](https://tanstack.com/query/v4/docs/react/overview) |
 
 ## Tarea Práctica N° 1
 
-_Último commit: [19-04-2023](https://github.com/fsarnes/tarea-practica-1/tree/2c5106ed5373d18f6ca1496c3102f5676800c1ff)_
+_**Código fuente:** [Ver último commit](https://github.com/fsarnes/tinder-perros/tree/2c5106ed5373d18f6ca1496c3102f5676800c1ff)_  
+_**Sitio Web:** [Ver DEMO](https://tinder-perros-tarea1.netlify.app/)_
 
 ![image](https://user-images.githubusercontent.com/59930505/234180842-2db5b3ea-5a76-4e13-a095-466be81f7a11.png)
 
@@ -42,6 +44,11 @@ Como **funcionalidad minima** se pedirá:
 **Personalizar la parte visual sumará puntos en base a la complejidad del desarrollo (máximo +1 punto).**
 
 ## Tarea Práctica N° 2
+
+_**Código fuente:** [Ver último commit](https://github.com/fsarnes/tinder-perros/tree/b50efcc8e8b7e5c8f504d51ef059221c0ad99499)_  
+_**Sitio Web:** [Ver DEMO](https://tinder-perros-tarea2.netlify.app/)_
+
+![image](https://user-images.githubusercontent.com/59930505/234510657-85a1ecc2-73ec-4c3c-a230-26a5af8bd2da.png)
 
 ### 💬 Enunciado
 
