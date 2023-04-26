@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Card, CardMedia, CardContent, IconButton, Tooltip, Divider, Stack } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import ClearIcon from "@mui/icons-material/Clear";
@@ -35,20 +35,20 @@ const CardItem = (dog) => {
           dog.accepted == null ?
           <Stack direction="row" spacing={2} justifyContent="center">
             <Tooltip title="Aceptar" placement="bottom">
-              <IconButton id={`btn1${dog.id}`}
+              <IconButton
                 onClick={() => dog.add(true)}
                 size="large"
                 color="success"
-              >
+                >
                 <CheckIcon />
               </IconButton>
             </Tooltip>
             <Tooltip title="Rechazar" placement="bottom">
-              <IconButton id={`btn2${dog.id}`}
+              <IconButton
                 onClick={() => dog.add(false)}
                 size="large"
                 color="error"
-              >
+                >
                 <ClearIcon />
               </IconButton>
             </Tooltip>
@@ -56,21 +56,21 @@ const CardItem = (dog) => {
           :
           <>
             <Tooltip title={dog.accepted ? 'Rechazar' : 'Aceptar'} placement="bottom">
-              <IconButton id={`btn3${dog.id}`}
+              <IconButton
                 onClick={() => dog.changeStatus(dog)}
                 size="large"
                 color="primary"
-              >
+                >
                 <SwapHorizIcon />
               </IconButton>
             </Tooltip>
             <Tooltip title={visibleDescription ? 'Ocultar descripción' : 'Ver descripción'} placement="bottom">
-              <IconButton id={`btn4${dog.id}`}
+              <IconButton
                 sx={{ position: 'absolute', right: '1rem' }}
                 onClick={() => setVisibleDescription(!visibleDescription)}
                 size="large"
                 color="primary"
-              >
+                >
                 {visibleDescription ? <VisibilityOffIcon /> : <VisibilityIcon />}
               </IconButton>
             </Tooltip>

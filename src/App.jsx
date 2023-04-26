@@ -5,79 +5,18 @@ import ImgAccepted from "./assets/accepted.svg";
 import CardItem from "./components/CardItem";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import { Box, Grid, Stack, Card, Button, Skeleton, LinearProgress } from "@mui/material";
-import axios from "axios";
-import dogNames from "dog-names";
+import { useDogQuery } from "./helpers/DogQuery";
 
 function App() {
-  const [dogCount, setDogCount] = useState(0);
-  const [dog, setDog] = useState({});
-  const [dogOk, setDogOk] = useState(false);
   const [vwidth, setVwidth] = useState(0);
   const ref = useRef(null);
-
+  
   const [rejectedList, setRejectedList] = useState([]);
   const [acceptedList, setAcceptedList] = useState([]);
-
-  const descriptions = [
-    "Siempre estoy emocionado de conocer a nuevas personas y hacer amigos.",
-    "Soy un perro muy sociable que se lleva bien con otros perros y humanos.",
-    "Me encanta jugar y hacer ejercicio con mis amigos humanos y caninos.",
-    "Soy un perro que siempre está emocionado por conocer nuevos amigos y me encanta jugar con el agua.",
-    "Soy un perro muy leal que siempre está al lado de mis seres queridos.",
-    "Siempre estoy dispuesto a hacer nuevos amigos para jugar juntos.",
-    "Soy muy amigable con los niños y siempre estoy feliz de jugar con ellos.",
-    "Soy un perro muy tranquilo y gentil que nunca mostraría agresividad.",
-    "Me encanta acurrucarme y pasar tiempo con mis dueños.",
-    "Siempre estoy feliz de dar paseos y explorar el mundo con mi familia.",
-    "Soy un perro muy juguetón y siempre estoy dispuesto a compartir mis juguetes.",
-    "Siempre estoy dispuesto a hacer nuevos amigos caninos y humanos.",
-    "Soy un perro muy amable y me encanta ayudar a mis dueños.",
-    "Siempre estoy emocionado de ver a mis seres queridos, incluso si sólo han estado fuera por unos minutos.",
-    "Me encanta dar abrazos y besos a mis seres queridos para mostrarles cuánto los quiero.",
-    "Soy muy respetuoso con otros animales y siempre me llevo bien con ellos.",
-    "Siempre estoy feliz de pasar tiempo al aire libre con mis amigos humanos.",
-    "Soy un perro muy enérgico y siempre estoy dispuesto a jugar y correr con mis amigos.",
-    "Soy muy protector con mis seres queridos y siempre estoy dispuesto a cuidar de ellos.",
-    "Me encanta hacer trucos y mostrarles a todos lo inteligente que soy.",
-    "Siempre estoy feliz de hacer nuevos amigos y tengo un gran corazón para todos.",
-    "Soy muy amigable con los extraños y siempre estoy dispuesto a darles la bienvenida.",
-    "Soy un perro muy feliz que siempre está saltando de alegría.",
-    "Siempre estoy dispuesto a compartir mi comida y agua con otros perros.",
-    "Soy un perro muy amistoso que siempre está dispuesto a jugar y hacer amigos.",
-    "Siempre estoy enfocado en hacer ejercicio y mantenerme en forma.",
-    "Soy muy paciente y siempre estoy dispuesto a esperar a mis seres queridos cuando están ocupados.",
-    "Me encanta dormir y acompañar a mi familia humana.",
-    "Soy un perro muy amable y siempre estoy feliz de recibir caricias y mimos.",
-    "Siempre estoy emocionado de salir y explorar nuevos lugares con mi familia."
-  ];
-
-  const getRandomDescription = () => descriptions[Math.floor(Math.random() * descriptions.length)];
-
-  const getDog = () => {
-    axios
-      .get("https://dog.ceo/api/breeds/image/random")
-      .then((response) => {
-        let dogName = dogNames.allRandom();
-        setDogCount(dogCount + 1);
-        setDog({
-          id: `${dogCount}-${dogName}`,
-          name: dogName,
-          age: Math.floor(Math.random() * 17 + 1),
-          distance: Math.floor(Math.random() * 30 + 1),
-          description: getRandomDescription(),
-          url: response.data.message
-        });
-      });
-  };
-
-  useEffect(() => {
-    setVwidth(ref.current.clientWidth);
-    getDog();
-  }, []);
-
-  useEffect(() => {
-    if (dog.url != undefined) setDogOk(true);
-  }, [dog]);
+  
+  const { data: dog, isLoading: loading } = useDogQuery({
+    dogCount: (rejectedList.length + acceptedList.length + 1)
+  });
 
   useEffect(() => {
     const handleWindowResize = () => setVwidth(ref.current.clientWidth);
@@ -86,13 +25,10 @@ function App() {
   });
 
   const addToList = (accepted) => {
-    setDogOk(false);
-    if (accepted) {
+    if (accepted)
       setAcceptedList(acceptedList => [...acceptedList, dog]);
-    } else {
+    else
       setRejectedList(rejectedList => [...rejectedList, dog]);
-    }
-    getDog();
   };
 
   const changeStatus = (dog) => {
@@ -110,7 +46,33 @@ function App() {
       <Grid container spacing={4} ref={ref}>
         <Grid item xs={12} sm={4} lg={5}>
           {
-            dogOk ?
+            loading ?
+              <Card className="container__card" sx={{ boxShadow: 3, border: 12, borderColor: 'white' }}>
+                <LinearProgress />
+                <Stack>
+                  <Skeleton variant="rectangular" sx={{ aspectRatio: '1', height: '100%', marginBottom: '.5rem' }} />
+                  <Box className="card__content">
+                    <Stack spacing={2.5}>
+                      <Stack spacing={4.7}>
+                        <Stack spacing={1.5}>
+                          <Skeleton variant="rectangular" width="40%" height="1.5rem" />
+                          <Skeleton variant="rectangular" width="60%" height="1.2rem" />
+                        </Stack>
+                        <Stack spacing={1}>
+                          <Skeleton variant="rectangular" width="90%" height="1rem" />
+                          <Skeleton variant="rectangular" width="90%" height="1rem" />
+                          <Skeleton variant="rectangular" width="30%" height="1rem" />
+                        </Stack>
+                      </Stack>
+                      <Stack direction="row" spacing={2} justifyContent="center">
+                        <Skeleton variant="circular" width="48px" height="48px" />
+                        <Skeleton variant="circular" width="48px" height="48px" />
+                      </Stack>
+                    </Stack>
+                  </Box>
+                </Stack>
+              </Card>
+            :
               <CardItem
               id={dog.id}
               name={dog.name}
@@ -120,32 +82,6 @@ function App() {
               accepted={null}
               add={addToList}
               url={dog.url} />
-            :
-            <Card className="container__card" sx={{ boxShadow: 3, border: 12, borderColor: 'white' }}>
-              <LinearProgress />
-              <Stack>
-                <Skeleton variant="rectangular" sx={{ aspectRatio: '1', height: '100%', marginBottom: '.5rem' }} />
-                <Box className="card__content">
-                  <Stack spacing={2.5}>
-                    <Stack spacing={4.7}>
-                      <Stack spacing={1.5}>
-                        <Skeleton variant="rectangular" width="40%" height="1.5rem" />
-                        <Skeleton variant="rectangular" width="60%" height="1.2rem" />
-                      </Stack>
-                      <Stack spacing={1}>
-                        <Skeleton variant="rectangular" width="90%" height="1rem" />
-                        <Skeleton variant="rectangular" width="90%" height="1rem" />
-                        <Skeleton variant="rectangular" width="30%" height="1rem" />
-                      </Stack>
-                    </Stack>
-                    <Stack direction="row" spacing={2} justifyContent="center">
-                      <Skeleton variant="circular" width="48px" height="48px" />
-                      <Skeleton variant="circular" width="48px" height="48px" />
-                    </Stack>
-                  </Stack>
-                </Box>
-              </Stack>
-            </Card>
           }
           <Box sx={{ textAlign: 'center' }}>
             <br />
