@@ -19,6 +19,10 @@ function App() {
   });
 
   useEffect(() => {
+    setVwidth(ref.current.clientWidth);
+  }, []);
+
+  useEffect(() => {
     const handleWindowResize = () => setVwidth(ref.current.clientWidth);
     window.addEventListener("resize", handleWindowResize);
     return () => window.removeEventListener("resize", handleWindowResize);
