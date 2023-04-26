@@ -45,10 +45,10 @@ Como **funcionalidad minima** se pedirá:
 
 ## Tarea Práctica N° 2
 
-_**Código fuente:** [Ver último commit](https://github.com/fsarnes/tinder-perros/tree/b50efcc8e8b7e5c8f504d51ef059221c0ad99499)_  
+_**Código fuente:** [Ver último commit](https://github.com/fsarnes/tinder-perros/tree/3399a01ae53d679d457fcdb5ee5149d3395ec8bc)_  
 _**Sitio Web:** [Ver DEMO](https://tinder-perros-tarea2.netlify.app/)_
 
-![image](https://user-images.githubusercontent.com/59930505/234510657-85a1ecc2-73ec-4c3c-a230-26a5af8bd2da.png)
+![image](https://user-images.githubusercontent.com/59930505/234513714-f0b399dd-1eac-4d97-9e9c-575214e082c4.png)
 
 ### 💬 Enunciado
 
